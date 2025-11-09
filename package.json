@@ -1,0 +1,11 @@
+{
+  "name": "aiihuman-frontend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8080",
+    "dev:node": "node server.js",
+    "start": "node server.js"
+  },
+  "description": "Human + AI Co-Creation Frontend"
+}

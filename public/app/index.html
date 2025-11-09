@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" id="homePage">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:3000 https://swayamshetkar-human-aii.hf.space https://cdn.jsdelivr.net https://huggingface.co; media-src 'self';">
+  <title>Human AI – Home</title>
+  <link rel="stylesheet" href="/public/app/assets/styles.css"/>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container row" style="justify-content:space-between">
+      <div class="row">
+        <button id="sidebarOpen" class="btn hamburger">☰</button>
+        <div class="brand" style="margin-left:8px">Human.<span style="color:var(--accent)">AI</span></div>
+      </div>
+      <nav class="main-nav" aria-label="Primary">
+        <a class="nav-link active" href="/app">Home</a>
+        <a class="nav-link" href="/about">About Us</a>
+        <a class="nav-link" href="https://codeyatri.space" target="_blank" rel="noopener">Codeyarti Build</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-head">
+      <div class="brand">Human<span style="color:var(--accent)">AI</span></div>
+      <button id="sidebarClose" class="btn hamburger">✕</button>
+    </div>
+    <div class="sidebar-body">
+      <!-- Emotion Analysis Display -->
+      <div class="accordion">
+        <button class="acc-btn" data-acc="emotion">
+          <span>🎭 Emotion Analysis</span><span>▾</span>
+        </button>
+        <div id="acc-emotion" class="acc-panel hidden">
+          <div class="row" style="justify-content:space-between">
+            <span class="muted">Status</span>
+            <span id="emotion-text">Waiting...</span>
+          </div>
+          <div class="row" style="justify-content:space-between;margin-top:6px">
+            <span class="muted">Confidence</span>
+            <span id="confidence-text">—</span>
+          </div>
+          <div class="row" style="justify-content:space-between;margin-top:6px">
+            <span class="muted">Source</span>
+            <span id="source-text">—</span>
+          </div>
+          <div class="space" style="height:12px"></div>
+          <button id="toggleCamera" class="btn" style="width:100%">Start Camera</button>
+          <video id="camera" width="100%" height="180" autoplay muted playsinline style="margin-top:10px;border-radius:10px;display:none"></video>
+        </div>
+      </div>
+
+      <!-- Personalization -->
+      <div class="accordion">
+        <button class="acc-btn" data-acc="pers">
+          <span>Personalization</span><span>▾</span>
+        </button>
+        <div id="acc-pers" class="acc-panel hidden">
+          <!-- Text Personal Data -->
+          <label class="muted" for="sidebarText">Personal Text Data</label>
+          <textarea id="sidebarText" class="input" rows="5" placeholder="My name is Sarah. I am 25 years old studying CS..."></textarea>
+          <div class="row" style="margin-top:8px;gap:8px">
+            <button id="personalTextUploadBtn" class="btn primary" style="flex:1">Upload Text</button>
+            <button id="personalTextEditBtn" class="btn" style="flex:1">Disable Edit</button>
+          </div>
+          <div class="space" style="height:22px"></div>
+          <!-- Code Files Upload -->
+          <label class="muted" for="codeFileInput">Code Files (Train)</label>
+          <div id="codeDropArea" class="drop-zone" tabindex="0" aria-label="Drag code files here or click to select">
+            <p style="margin:0;font-size:13px">Drag & Drop files here or click to select</p>
+            <input id="codeFileInput" type="file" multiple style="display:none" accept=".js,.ts,.py,.java,.c,.cpp,.json,.html,.css,.txt,.md" />
+          </div>
+          <div id="codeFilesList" class="files-list hidden" aria-live="polite"></div>
+          <div class="row" style="margin-top:10px;gap:8px">
+            <button id="personalCodeUploadBtn" class="btn primary" style="flex:1">Upload Code</button>
+            <button id="personalCodeEditBtn" class="btn" style="flex:1">Toggle Edit</button>
+          </div>
+          <small class="muted" style="display:block;margin-top:8px;font-size:11px">Uploads send to /train_overall (text) & /train (files). <button id="guideResetBtn" class="btn ghost" style="margin-left:6px;padding:4px 8px;font-size:11px">Reset Guide</button></small>
+        </div>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="accordion">
+        <button class="acc-btn" data-acc="info">
+          <span>Personal Info</span><span>▾</span>
+        </button>
+        <div id="acc-info" class="acc-panel hidden">
+          <div class="row" style="justify-content:space-between">
+            <div class="muted">Email</div><div id="infoEmail">guest@example.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat History -->
+      <div class="accordion">
+        <button class="acc-btn" data-acc="history">
+          <span>Conversation History</span><span>▾</span>
+        </button>
+        <div id="acc-history" class="acc-panel hidden">
+          <label class="muted" for="historySession" style="display:block;margin-bottom:4px">Session ID</label>
+          <input id="historySession" class="input" placeholder="Enter session id..." />
+          <div class="row" style="margin-top:8px;gap:8px">
+            <button id="historyLoadBtn" class="btn primary" style="flex:1">View History</button>
+            <button id="historyClearBtn" class="btn" style="flex:1">Clear</button>
+          </div>
+          <div id="historyList" class="history-list hidden" aria-live="polite" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="backdrop"></div>
+
+  <!-- Main -->
+  <main>
+    <section id="mainSection" class="container center initial-state" style="min-height:calc(100vh - 60px);gap:24px">
+      <div id="hero" class="hero">
+        <img src="/public/app/images/hero.svg" alt="AI illustration" onerror="this.style.display='none'"/>
+        <div class="title">Human<span style="color:var(--accent)">AI</span></div>
+        <div class="tagline">Where AI learns you, not just from you</div>
+      </div>
+
+      <!-- Chat Thread -->
+      <div id="chatWrap" class="chat-wrap">
+        <div id="messages" class="messages hidden">
+          <div class="msg ai">
+            <div class="avatar" aria-hidden="true">🤖</div>
+            <div class="bubble">Welcome to Human AI. Pick a mode below and ask anything.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-wrap">
+        <div class="prompt-inner">
+          <input id="prompt" class="input" placeholder="Type your idea or question..."/>
+          <button id="send" class="btn primary send">Send</button>
+        </div>
+      </div>
+      <div class="mode-switch below left" role="tablist" aria-label="Mode">
+          <button class="mode-btn" data-mode="code" aria-selected="false">Code</button>
+          <button class="mode-btn active" data-mode="study" aria-selected="true">Study</button>
+          <button class="mode-btn" data-mode="refactor" aria-selected="false">Refactor</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Onboarding / Guide Modals -->
+  <div id="guideModal1" class="modal">
+    <div class="modal-card card" role="dialog" aria-labelledby="guide1Title" aria-modal="true">
+      <h3 id="guide1Title" style="margin-top:0">👋 Welcome! Start with Personalization</h3>
+      <p class="muted" style="margin-top:6px">Tell the AI about you so responses match your style. You can add or skip now and do this later from the sidebar.</p>
+      <label class="muted" for="guideText" style="display:block;margin:8px 0 6px">Personal Text</label>
+      <textarea id="guideText" class="input" rows="5" placeholder="My name is Sarah. I am 25 years old studying CS..."></textarea>
+      <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap">
+        <button id="guide1UploadBtn" class="btn primary">Upload My Text</button>
+        <button id="guide1SkipBtn" class="btn">Skip for now</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="guideModal2" class="modal">
+    <div class="modal-card card" role="dialog" aria-labelledby="guide2Title" aria-modal="true">
+      <h3 id="guide2Title" style="margin-top:0">📦 Upload Code (optional)</h3>
+      <p class="muted" style="margin-top:6px">Send a few files so the AI understands your project. Drag & drop works too.</p>
+      <div id="guideDrop" class="drop-zone" tabindex="0" aria-label="Drag code files here or click to select">
+        <p style="margin:0;font-size:13px">Drag & Drop files here or click to select</p>
+        <input id="guideFiles" type="file" multiple style="display:none" accept=".js,.ts,.py,.java,.c,.cpp,.json,.html,.css,.txt,.md" />
+      </div>
+      <div id="guideFilesList" class="files-list hidden" aria-live="polite"></div>
+      <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap">
+        <button id="guide2UploadBtn" class="btn">Choose Files</button>
+        <button id="guide2UploadNowBtn" class="btn primary">Upload Code</button>
+        <button id="guide2SkipBtn" class="btn">Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/bridge.js"></script>
+  <script type="module" src="/public/app/assets/app.js"></script>
+</body>
+</html>

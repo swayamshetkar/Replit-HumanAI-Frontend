@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" id="aboutPage">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:3000 https://swayamshetkar-human-aii.hf.space https://cdn.jsdelivr.net https://huggingface.co; media-src 'self';">
+  <title>PersonaAI – About</title>
+  <link rel="stylesheet" href="/public/app/assets/styles.css"/>
+  <style>
+    .section{margin-top:42px}
+    .section:first-of-type{margin-top:8px}
+    .pill{display:inline-block;padding:4px 10px;border:1px solid var(--border);border-radius:30px;font-size:12px;letter-spacing:.4px;background:var(--card);margin:0 6px 6px 0;color:var(--muted)}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px}
+    .code-block{background:var(--card-2);border:1px solid var(--hairline);padding:14px 16px;border-radius:14px;font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;font-size:13px;line-height:1.5;overflow:auto}
+    .inline-badge{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:.5px;box-shadow:0 4px 14px rgba(32,195,156,.45)}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:20px}
+    @media(max-width:840px){.two-col{grid-template-columns:1fr}}
+    .feature-card{padding:18px}
+    .list-check{list-style:none;padding-left:0;margin:10px 0 0}
+    .list-check li{position:relative;padding-left:26px;margin-bottom:8px}
+    .list-check li::before{content:"✅";position:absolute;left:0;top:0}
+    .list-x li::before{content:"❌"}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container row" style="justify-content:space-between">
+      <div class="row">
+        <a href="/app" class="btn hamburger" aria-label="Home">←</a>
+        <div class="brand" style="margin-left:8px">Human.<span style="color:var(--accent)">AI</span></div>
+      </div>
+      <nav class="main-nav" aria-label="Primary">
+        <a class="nav-link" href="/app">Home</a>
+        <a class="nav-link active" href="/about">About Us</a>
+        <a class="nav-link" href="https://codeyatri.space" target="_blank" rel="noopener">Codeyarti Build</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container" style="max-width:980px;padding:30px 0 60px">
+      <div class="hero" style="padding:0 0 10px">
+        <div class="title" style="text-align:left"> Human + AI Co-Creation</div>
+        <div class="tagline" style="text-align:left;max-width:640px">Emotion-aware, personalization-driven collaboration between you and adaptive AI.</div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card feature-card">
+          <h3 style="margin-top:0">Hybrid Detection</h3>
+          <p class="muted" style="font-size:14px">Facial expression + text sentiment fused with confidence weighting.</p>
+        </div>
+        <div class="card feature-card">
+          <h3 style="margin-top:0">Graceful Fallbacks</h3>
+          <p class="muted" style="font-size:14px">Still works when camera is denied – text-only analysis automatically.</p>
+        </div>
+        <div class="card feature-card">
+          <h3 style="margin-top:0">Real‑Time Feedback</h3>
+          <p class="muted" style="font-size:14px">Frame‑by‑frame face signals + live sentiment shaping the response style.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 style="margin:0 0 4px">🎭 Emotion Detection Pipeline</h2>
+        <p class="muted" style="margin-top:4px">Three layered analyzers cooperating to produce a stable, context‑aware emotional state.</p>
+        <div class="card" style="padding:20px;margin-top:16px">
+          <div class="code-block" aria-label="diagram" style="font-size:13px">
+┌─────────────────────────────────────────┐
+│ 1. FACIAL ANALYSIS (optional)          │
+│    TinyFaceDetector + FaceExpression   │
+│    Threshold tuned (score ≥ 0.5)       │
+└─────────────────────────────────────────┘
+                  ↓
+┌─────────────────────────────────────────┐
+│ 2. TEXT SENTIMENT HEURISTICS           │
+│    Keyword models (frustrated/happy)   │
+└─────────────────────────────────────────┘
+                  ↓
+┌─────────────────────────────────────────┐
+│ 3. INTELLIGENT FUSION                  │
+│    Confidence weighting + agreement    │
+│    Produces final emotion + source     │
+└─────────────────────────────────────────┘
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">Mapping</h3>
+            <p class="muted" style="font-size:14px">Raw Face‑API emotions normalized to learning context:</p>
+            <ul class="muted" style="font-size:13px;line-height:1.5">
+              <li><strong>angry / sad / disgusted / fearful</strong> → <span class="inline-badge">frustrated</span></li>
+              <li><strong>happy</strong> → <span class="inline-badge" style="background:linear-gradient(180deg,var(--accent-3),var(--accent-2))">happy</span></li>
+              <li><strong>surprised</strong> → neutral</li>
+              <li><strong>neutral</strong> → neutral</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">Fusion Decision Tree</h3>
+            <div class="code-block" style="font-size:12px;line-height:1.5">Face conf > 0.7 ? → use face
+Else if face + text agree → confidence 0.95
+Else if text strong → confidence 0.65
+Else → fallback (face if available else text)</div>
+            <p class="muted" style="font-size:12px;margin-top:10px">Designed for stability + immediate reaction without jitter.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 style="margin:0 0 6px">🐛 Troubleshooting</h2>
+        <div class="two-col">
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">Face Always Neutral?</h3>
+            <ul class="muted" style="font-size:13px;padding-left:18px;line-height:1.5">
+              <li>Improve lighting (front‑facing)</li>
+              <li>Center face / look straight</li>
+              <li>Lower scoreThreshold → 0.3</li>
+              <li>Raise inputSize → 320+</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">Camera Blocked?</h3>
+            <p class="muted" style="font-size:13px">Automatic fallback to text‑only analysis. No errors; UI shows warning badge.</p>
+            <h4 style="margin:14px 0 6px;font-size:14px">CSP Tip</h4>
+            <div class="code-block" style="font-size:11px;white-space:pre">&lt;meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; ..."&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 style="margin:0 0 4px">Personalization Memory</h2>
+        <p class="muted" style="max-width:720px">Store durable personal context (name, preferences, goals) used automatically in every AI interaction. No need to repeat yourself.</p>
+        <div class="two-col">
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">Endpoints</h3>
+            <div class="code-block" style="font-size:12px">POST /train_overall
+{ personal_data: "My name is Alex..." }
+→ Saves entry (timestamped)
+GET /get_personal_info → All entries
+POST /clear_personal_info → Purge</div>
+          </div>
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">Storage Shape</h3>
+            <div class="code-block" style="font-size:11px">{
+  personal_info: {
+    entries: [{ timestamp, content }],
+    raw_data: "..."
+  },
+  coding_style: {...},
+  fingerprint: {...},
+  last_updated: "ISO"
+}</div>
+            <p class="muted" style="font-size:11px;margin-top:6px">Loaded + injected into system prompts automatically.</p>
+          </div>
+        </div>
+        <div class="card" style="padding:20px;margin-top:18px">
+          <h3 style="margin-top:0">Example Conversation</h3>
+          <div class="code-block" style="font-size:12px">POST /train_overall
+{"personal_data":"My name is Alex. I prefer Python."}
+POST /ask
+{"query":"What's my name?"}
+→ "Your name is Alex and you prefer Python."</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 style="margin:0 0 6px">🎯 Accuracy Tips</h2>
+        <div class="two-col">
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">For Users</h3>
+            <ul class="list-check muted" style="font-size:13px">
+              <li>Good front lighting</li>
+              <li>Face centered</li>
+              <li>Consistent expressions</li>
+              <li>Decent webcam ≥ 480p</li>
+            </ul>
+            <ul class="list-check list-x muted" style="font-size:13px;margin-top:14px">
+              <li>Backlit background</li>
+              <li>Face partially covered</li>
+              <li>Very low resolution</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:20px">
+            <h3 style="margin-top:0">For Developers</h3>
+            <ul class="muted" style="font-size:13px;padding-left:18px;line-height:1.5">
+              <li>Expand keyword list</li>
+              <li>Higher inputSize (320/416)</li>
+              <li>Temporal smoothing (avg last 3 frames)</li>
+              <li>Consider SSD MobileNet</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 style="margin:0 0 4px">🚀 Roadmap Ideas</h2>
+        <div class="grid-3" style="margin-top:10px">
+          <div class="card feature-card"><h3 style="margin-top:0">Temporal Smoothing</h3><p class="muted" style="font-size:13px">Aggregate micro‑fluctuations for calmer UI feedback.</p></div>
+          <div class="card feature-card"><h3 style="margin-top:0">Attention Detection</h3><p class="muted" style="font-size:13px">Detect gaze shifts → track engagement dips.</p></div>
+          <div class="card feature-card"><h3 style="margin-top:0">Voice Tone</h3><p class="muted" style="font-size:13px">Add microphone emotion + prosody cues.</p></div>
+          <div class="card feature-card"><h3 style="margin-top:0">Blink Rate</h3><p class="muted" style="font-size:13px">Estimate fatigue / cognitive load signals.</p></div>
+          <div class="card feature-card"><h3 style="margin-top:0">Historical Timeline</h3><p class="muted" style="font-size:13px">Session emotion graph for reflection.</p></div>
+          <div class="card feature-card"><h3 style="margin-top:0">Encrypted Memory</h3><p class="muted" style="font-size:13px">Secure personal data for production use.</p></div>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:48px">
+        <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0">Summary</h2>
+          <p class="muted" style="font-size:14px">Human.AI fuses multi‑modal signals (face + text) with persistent personalized memory to craft adaptive, empathetic responses. It evolves from a generic assistant into a context‑aware collaborator.</p>
+          <div class="row" style="flex-wrap:wrap">
+            <span class="pill">Emotion Fusion</span>
+            <span class="pill">Personal Memory</span>
+            <span class="pill">Adaptive Modes</span>
+            <span class="pill">Confidence Scoring</span>
+            <span class="pill">Roadmap Ready</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/public/app/assets/app.js"></script>
+</body>
+</html>

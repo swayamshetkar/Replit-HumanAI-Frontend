@@ -1,0 +1,100 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:3000 https://swayamshetkar-human-aii.hf.space https://cdn.jsdelivr.net https://huggingface.co;">
+  <title>Human + AI Co-Creation</title>
+</head>
+<body>
+  <h2>🧠 Human + AI Co-Creation</h2>
+  <p>Select your mode:</p>
+
+  <div>
+    <button id="mode-study">📘 Study</button>
+    <button id="mode-code">💻 Code</button>
+    <button id="mode-refactor">🧩 Refactor</button>
+    <a id="nav-train" href="/train" style="margin-left:10px;">🧪 Train Code</a>
+    <a id="nav-personalization" href="/personalization" style="margin-left:10px;">👤 Personalization</a>
+  </div>
+
+  <div id="app-section">
+    <br>
+    <textarea id="input" rows="5" cols="60" placeholder="Ask a question or paste code here..."></textarea>
+    <br><br>
+
+    <video id="camera" width="320" height="240" autoplay muted></video>
+    <br><br>
+
+    <button id="analyze">Ask AI</button>
+
+    <h3>🎭 Emotion Analysis</h3>
+    <div id="emotion-status" style="padding: 10px; background: #f0f0f0; border-radius: 5px; margin-bottom: 10px;">
+      <strong>Status:</strong> <span id="emotion-text">Waiting...</span><br>
+      <strong>Confidence:</strong> <span id="confidence-text">-</span><br>
+      <strong>Source:</strong> <span id="source-text">-</span>
+    </div>
+
+    <h3>🧾 Output</h3>
+    <pre id="output"></pre>
+  </div>
+
+  <!-- TRAINING SECTION (route: /train) -->
+  <div id="train-section" style="display:none; margin-top:20px; padding:15px; border:1px solid #ccc; border-radius:8px; background:#fafafa;">
+    <h3>🧪 Model Training Input</h3>
+    <p>Paste code AND/OR select multiple files containing code to send to <code>/train</code>.</p>
+    <textarea id="train-code" rows="10" cols="70" placeholder="Paste code here (optional if files selected)..."></textarea><br><br>
+    
+    <div style="margin-bottom:10px;">
+      <input type="file" id="train-file" accept=".js,.ts,.py,.java,.c,.cpp,.txt,.md,.json,.html,.css" multiple />
+      <span id="train-file-status" style="margin-left:10px;font-size:0.9em;color:#555;"></span>
+    </div>
+    
+    <div id="train-files-list" style="max-height:150px; overflow-y:auto; padding:10px; background:#fff; border:1px solid #ddd; border-radius:4px; margin-bottom:10px; display:none;">
+      <strong>📁 Selected Files:</strong>
+      <ul id="train-files-items" style="margin:5px 0; padding-left:20px;"></ul>
+    </div>
+    
+    <button id="train-submit">📤 Send to /train</button>
+    <button id="train-clear" style="margin-left:10px;">🗑️ Clear All</button>
+    <pre id="train-result" style="margin-top:15px; white-space:pre-wrap;"></pre>
+  </div>
+
+  <!-- PERSONALIZATION SECTION (route: /personalization) -->
+  <div id="personalization-section" style="display:none; margin-top:20px; padding:15px; border:1px solid #ccc; border-radius:8px; background:#f0f8ff;">
+    <h3>👤 Personal Information</h3>
+    <p>Tell the AI about yourself! This information will be remembered in all future conversations.</p>
+    <p style="color:#666; font-size:0.9em;">
+      Examples: "My name is Sarah. I'm 20 years old studying Computer Science at MIT."<br>
+      "I prefer Python over JavaScript. I work part-time at Google."<br>
+      "I love gaming, especially RPGs and strategy games."
+    </p>
+    <textarea id="personal-data" rows="12" cols="70" placeholder="Enter your personal information here...
+
+Examples:
+- My name is [Your Name]
+- I am [age] years old
+- I'm studying/working as [details]
+- My interests are [hobbies]
+- I prefer [preferences]
+- My goals are [goals]
+
+The AI will remember all of this!"></textarea><br><br>
+    
+    <button id="personal-submit">💾 Save Personal Info</button>
+    <button id="personal-view" style="margin-left:10px;">👁️ View Saved Info</button>
+    <button id="personal-clear" style="margin-left:10px;">🗑️ Clear All Info</button>
+    <br><br>
+    
+    <div id="personal-stats" style="padding:10px; background:#e8f4f8; border-radius:5px; margin-bottom:10px; display:none;">
+      <strong>📊 Stats:</strong><br>
+      <span id="stats-entries">Entries: 0</span> | 
+      <span id="stats-chars">Characters: 0</span>
+    </div>
+    
+    <pre id="personal-result" style="margin-top:15px; white-space:pre-wrap;"></pre>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
