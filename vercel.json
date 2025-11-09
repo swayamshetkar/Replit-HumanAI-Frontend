@@ -3,7 +3,6 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/app", "destination": "/public/app/index.html" },
-    { "source": "/app/:path*", "destination": "/public/app/index.html" },
     { "source": "/about", "destination": "/public/app/about.html" },
     { "source": "/about-us", "destination": "/public/app/about.html" },
     { "source": "/train", "destination": "/index.html" },
