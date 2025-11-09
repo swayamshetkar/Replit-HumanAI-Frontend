@@ -72,6 +72,29 @@ const server = createServer(async (req, res) => {
     }
   }
 
+  // Map /app static assets to /public/app/* for resiliency (so /app/assets/* works)
+  if (urlPath.startsWith('/app/assets/') || urlPath.startsWith('/app/images/')) {
+    const subPath = urlPath.replace(/^\/app\//, ''); // assets/... or images/...
+    const fsPath = join(__dirname, 'public', 'app', subPath);
+    const ext = extname(fsPath);
+    const contentType = mimeTypes[ext] || 'application/octet-stream';
+    try {
+      const content = await getFileCached(fsPath);
+      res.writeHead(200, { 'Content-Type': contentType, 'Content-Security-Policy': CSP });
+      res.end(content);
+      return;
+    } catch (e) {
+      if (e.code === 'ENOENT') {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Not Found');
+        return;
+      }
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('Internal Server Error');
+      return;
+    }
+  }
+
   // Pretty routes mapping
   const routeMap = {
     '/about': 'public/app/about.html',
