@@ -284,3 +284,75 @@ MIT
 ---
 
 **Built with ❤️ for adaptive AI tutoring**
+
+---
+
+## 🚢 Deploying to Replit (Autoscale/Reserved VM)
+
+Use these settings to avoid health check/build failures:
+
+- Build command: leave empty or use `npm install` (do NOT set `node server.js` here)
+- Run command: `node server.js` (or `npm start`)
+- Health check path: `/health`
+- Environment: PORT is provided by Replit; the server listens on `0.0.0.0`
+
+Troubleshooting:
+- Health check timeout → ensure `/health` returns 200 (it does in `server.js`)
+- Bind errors/ECONNREFUSED → confirm it’s listening on `0.0.0.0` (already configured)
+- Blank page → check `index.html` exists at project root and redeploy latest commit
+
+---
+
+## ▲ Deploying to Vercel
+
+This project is a static frontend (no server-side Node framework) plus a simple Node dev server. On Vercel you should deploy it as a static site.
+
+### Recommended Settings
+
+- Framework Preset: "Other"
+- Build Command: (leave empty) or `echo "skip"` — there is no build step
+- Install Command: `npm install` (optional; no deps required)
+- Output Directory: `.` (root) or keep default (since `index.html` is at root)
+- Development Command: Leave blank (Vercel will serve static) — do NOT run `node server.js` in production.
+
+### SPA / Pretty Routes
+We added `vercel.json` with rewrites so routes like `/app`, `/about`, `/personalization` resolve correctly.
+
+`vercel.json` excerpt:
+```jsonc
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/app", "destination": "/public/app/index.html" },
+    { "source": "/app/:path*", "destination": "/public/app/index.html" },
+    { "source": "/about", "destination": "/public/app/about.html" },
+    { "source": "/about-us", "destination": "/public/app/about.html" },
+    { "source": "/train", "destination": "/index.html" },
+    { "source": "/personalization", "destination": "/index.html" }
+  ]
+}
+```
+
+### Why not use server.js on Vercel?
+Vercel’s static hosting is faster and globally cached. `server.js` is only for local development (serving CSP headers and fallbacks). Your HTML already embeds a CSP meta tag, so headers aren’t strictly required.
+
+### Add a Health Check?
+For Vercel a health endpoint isn’t needed; the site is static. If required by external monitors, point them to `/`.
+
+### Common Pitfalls
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| 404 on /app | Missing rewrite | Ensure `vercel.json` present at repo root |
+| build fails | Nonexistent build step | Leave build blank or use `echo skip` |
+| assets 404 | Output directory mis-set | Use root `.` (don’t point to `public/app`) |
+| CSP blocked eval | Missing meta CSP | Confirm `<meta http-equiv="Content-Security-Policy" ...>` in `index.html` |
+
+### Optional Optimization
+Add a lightweight build step later (e.g., bundling JS) and set Output Directory to `dist/`. For now simplicity wins.
+
+### Quick Deploy (CLI)
+If using Vercel CLI:
+```powershell
+vercel --prod
+```

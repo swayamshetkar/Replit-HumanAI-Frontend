@@ -2,6 +2,9 @@
   "name": "aiihuman-frontend",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.x"
+  },
   "scripts": {
     "dev": "python -m http.server 8080",
     "dev:node": "node server.js",
